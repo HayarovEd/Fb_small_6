@@ -3,7 +3,7 @@ buildscript {
     repositories {
 
 
-        val hilt = "2.45"
+        val hilt = "2.47"
         dependencies {
             classpath   ("com.google.dagger:hilt-android-gradle-plugin:$hilt")
         }

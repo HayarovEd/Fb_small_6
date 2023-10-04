@@ -1,11 +1,13 @@
-package rock.paper.scissors
+package rock.paper.scissors.data
+
+import rock.paper.scissors.R
 
 data class Variant(
     val id: Int,
     val image: Int
 )
 
-val variandts = listOf(
+val variants = listOf(
     Variant(
         id = 1,
         image = R.drawable.rock
