@@ -1,4 +1,4 @@
-package rock.paper.scissors.ui.theme
+package com.rock.paper.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

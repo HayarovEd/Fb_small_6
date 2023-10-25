@@ -1,4 +1,4 @@
-package rock.paper.scissors
+package com.rock.paper.app
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -21,8 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import rock.paper.scissors.ui.theme.background
-import rock.paper.scissors.ui.theme.titleText
+import com.rock.paper.app.ui.theme.background
+import com.rock.paper.app.ui.theme.titleText
 
 @Composable
 fun Content(

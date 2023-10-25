@@ -1,4 +1,4 @@
-package rock.paper.scissors
+package com.rock.paper.app
 
 data class MainState (
     val scoreMen: Int = 0,

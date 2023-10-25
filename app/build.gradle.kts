@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "rock.paper.scissors"
+    namespace = "com.rock.paper.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "rock.paper.scissors"
+        applicationId = "com.rock.paper.app"
         minSdk = 21
         targetSdk = 34
         versionCode = 1

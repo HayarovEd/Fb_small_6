@@ -1,4 +1,4 @@
-package rock.paper.scissors
+package com.rock.paper.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

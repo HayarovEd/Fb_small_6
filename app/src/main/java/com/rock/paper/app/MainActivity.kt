@@ -1,4 +1,4 @@
-package rock.paper.scissors
+package com.rock.paper.app
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

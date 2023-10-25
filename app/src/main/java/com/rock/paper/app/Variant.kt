@@ -1,4 +1,4 @@
-package rock.paper.scissors
+package com.rock.paper.app
 
 data class Variant(
     val id: Int,

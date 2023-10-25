@@ -1,4 +1,4 @@
-package rock.paper.scissors.ui.theme
+package com.rock.paper.app.ui.theme
 
 import android.app.Activity
 import android.os.Build
